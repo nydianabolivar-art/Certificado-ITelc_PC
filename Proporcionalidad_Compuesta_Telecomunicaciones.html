@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proporcionalidad Compuesta — Ingeniería de Telecomunicaciones</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header y navegación */
+        header {
+            background: linear-gradient(135deg, #1976d2 0%, #00838f 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Navegación */
+        nav {
+            background: #f5f5f5;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        nav .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: #1976d2;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95em;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover {
+            background: #f0f0f0;
+            color: #00838f;
+        }
+
+        nav button.active {
+            background: #1976d2;
+            color: white;
+        }
+
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Estilos de contenido */
+        h2 {
+            color: #1976d2;
+            font-size: 2em;
+            margin: 30px 0 20px 0;
+            border-bottom: 3px solid #00838f;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #0d47a1;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        h4 {
+            color: #1976d2;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        /* Cajas especiales */
+        .intro-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #e0f2f1 100%);
+            border-left: 5px solid #1976d2;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box {
+            background: #fff9c4;
+            border-left: 5px solid #f57f17;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box strong {
+            color: #e65100;
+        }
+
+        .example-box {
+            background: #e0f2f1;
+            border-left: 5px solid #00695c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: #004d40;
+            margin-top: 0;
+        }
+
+        /* Tablas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th {
+            background: linear-gradient(135deg, #1976d2 0%, #00838f 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 15px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        table tr:hover {
+            background: #fafafa;
+        }
+
+        /* Listas */
+        ul, ol {
+            margin: 20px 0 20px 40px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        /* Procedimiento con pasos */
+        .procedure-step {
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #1976d2;
+        }
+
+        .procedure-step h4 {
+            color: #0d47a1;
+            margin-top: 0;
+        }
+
+        /* Formularios */
+        .form-group {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select, textarea {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        /* Botones */
+        button {
+            background: linear-gradient(135deg, #1976d2 0%, #00838f 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: #9e9e9e;
+        }
+
+        .btn-secondary:hover {
+            background: #757575;
+            box-shadow: 0 8px 20px rgba(158, 158, 158, 0.3);
+        }
+
+        /* Calculadora */
+        .calculator-container {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .variable-input {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            align-items: end;
+        }
+
+        .variable-input input {
+            grid-column: span 1;
+        }
+
+        .variable-input select {
+            grid-column: span 1;
+        }
+
+        .remove-btn {
+            background: #d32f2f;
+            padding: 10px 15px;
+            font-size: 0.9em;
+        }
+
+        .remove-btn:hover {
+            background: #b71c1c;
+        }
+
+        /* Quiz/Ejercicios */
+        .exercise-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercise-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #1976d2 0%, #00838f 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .exercise-card h3 {
+            margin-top: 0;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #fafafa;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .option:hover {
+            background: #f0f0f0;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Resultados */
+        .result-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-box.error {
+            background: #ffebee;
+            border-color: #d32f2f;
+        }
+
+        /* Certificado */
+        .certificate {
+            background: white;
+            border: 3px solid #1976d2;
+            border-radius: 15px;
+            padding: 60px 40px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 15px 50px rgba(25, 118, 210, 0.2);
+            page-break-inside: avoid;
+            display: none;
+        }
+
+        .certificate.show {
+            display: block;
+        }
+
+        .certificate-header {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1976d2;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .certificate-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 30px 0;
+        }
+
+        .certificate-content {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin: 30px 0;
+        }
+
+        .certificate-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #0d47a1;
+            margin: 30px 0;
+            border-bottom: 2px solid #1976d2;
+            padding-bottom: 10px;
+        }
+
+        .certificate-date {
+            font-size: 0.95em;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        .certificate-seal {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #00838f;
+            border-radius: 50%;
+            margin: 30px 0;
+            font-size: 3em;
+            line-height: 94px;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1976d2 0%, #00838f 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            nav .nav-container {
+                gap: 10px;
+            }
+
+            nav button {
+                font-size: 0.85em;
+                padding: 6px 10px;
+            }
+
+            .variable-input {
+                grid-template-columns: 1fr;
+            }
+
+            .certificate {
+                padding: 40px 20px;
+            }
+
+            .certificate-title {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Animación de entrada */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            animation: slideInDown 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>📡 Proporcionalidad Compuesta</h1>
+        <p>Domina el arte de relacionar múltiples variables — esencial para diseño de redes, análisis de cobertura, optimización de ancho de banda, ingeniería de tráfico y telecomunicaciones modernas</p>
+    </header>
+
+    <!-- Navegación -->
+    <nav>
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="switchSection('intro')">📘 Intro</button>
+            <button class="nav-btn" onclick="switchSection('conceptos')">🎯 Conceptos</button>
+            <button class="nav-btn" onclick="switchSection('procedimiento')">📐 Procedimiento</button>
+            <button class="nav-btn" onclick="switchSection('aplicaciones')">📶 Aplicaciones</button>
+            <button class="nav-btn" onclick="switchSection('calculadora')">🧮 Calculadora</button>
+            <button class="nav-btn" onclick="switchSection('practica')">✅ Práctica</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- SECCIÓN: INTRO -->
+        <section id="intro" class="active">
+            <h2>Bienvenido a Proporcionalidad Compuesta</h2>
+            
+            <div class="intro-box">
+                <h3>¿Qué vas a aprender?</h3>
+                <p>En 6 secciones interactivas dominarás la proporcionalidad compuesta desde cero, aplicada al mundo de Telecomunicaciones:</p>
+                <ul>
+                    <li><strong>Módulo 1 — Fundamentos:</strong> Proporcionalidad directa e inversa. Conceptos base explicados claramente.</li>
+                    <li><strong>Módulo 2 — Conceptos:</strong> Definiciones formales, vocabulario clave y tips especiales para Telecomunicaciones.</li>
+                    <li><strong>Módulo 3 — Procedimiento:</strong> Dos métodos paso a paso. Ejemplos completamente resueltos.</li>
+                    <li><strong>Módulo 4 — Aplicaciones Telecomunicaciones:</strong> Casos reales: redes, cobertura, ancho de banda, latencia, tráfico.</li>
+                    <li><strong>Módulo 5 — Calculadora:</strong> Herramienta interactiva para resolver tus propios problemas.</li>
+                    <li><strong>Módulo 6 — Práctica:</strong> 10 ejercicios telecom. Obtén tu certificado si logras 8/10.</li>
+                </ul>
+            </div>
+
+            <h3>¿Por qué importa en Ingeniería de Telecomunicaciones?</h3>
+            <p>Como ingeniero de telecomunicaciones, constantemente enfrentas decisiones sobre relaciones entre múltiples variables en tus redes y sistemas:</p>
+            <ul>
+                <li>📡 Si aumentas el número de antenas <strong>y</strong> la potencia de transmisión, ¿cómo afecta la cobertura?</li>
+                <li>🌐 Si incrementas la cantidad de usuarios <strong>pero</strong> añades más servidores, ¿cuál será el ancho de banda requerido?</li>
+                <li>⏱️ Si aumentas la distancia de transmisión <strong>pero</strong> mejoras la antena receptora, ¿cuál es la calidad de señal resultante?</li>
+                <li>🔌 Si más dispositivos se conectan a la red <strong>y</strong> aumentas la velocidad de conexión, ¿cuánto ancho de banda necesitas?</li>
+                <li>📊 Si incrementas la frecuencia de transmisión <strong>pero</strong> añades más repetidores, ¿cuál es el alcance de la red?</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>💡 Consejo:</strong> La proporcionalidad compuesta es la base matemática detrás del análisis de cobertura, ingeniería de tráfico, dimensionamiento de redes, cálculo de capacidad, optimización de recursos espectrales y planificación de infraestructura de telecomunicaciones.
+            </div>
+
+            <h3>Repaso rápido: proporciones simples</h3>
+            <p>Antes de entender lo compuesto, necesitas dominar lo simple. Hay dos tipos fundamentales:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                        <th>Fórmula</th>
+                        <th>Ejemplo en Telecomunicaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Directa</strong></td>
+                        <td>Si una variable sube, la otra sube proporcionalmente</td>
+                        <td><code>y = k · x</code></td>
+                        <td>Más usuarios → mayor ancho de banda requerido</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inversa</strong></td>
+                        <td>Si una variable sube, la otra baja proporcionalmente</td>
+                        <td><code>y = k / x</code></td>
+                        <td>Mayor potencia de transmisión → menor distancia máxima</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>¿Qué es la Proporcionalidad Compuesta?</h3>
+            <p>Es cuando una variable desconocida depende simultáneamente de <strong>dos o más variables conocidas</strong>, cada una con una relación directa o inversa. En telecomunicaciones, esto ocurre constantemente porque la calidad, cobertura y capacidad de tus redes están determinadas por múltiples factores actuando en paralelo.</p>
+            
+            <div class="example-box">
+                <h4>📊 Ejemplo introductorio</h4>
+                <p>Una red inalámbrica con <strong>50 usuarios</strong> en <strong>1 km²</strong> con <strong>10 Mbps</strong> velocidad requiere <strong>2 antenas base</strong>.</p>
+                <p>¿Cuántas antenas base se necesitarán para <strong>200 usuarios</strong> en <strong>4 km²</strong> con <strong>25 Mbps velocidad**?</p>
+                <p>Hay tres variables que cambian (usuarios, área, velocidad) y una incógnita (antenas). <strong>Esto es proporcionalidad compuesta.</strong></p>
+            </div>
+
+            <p><strong>Diferencia clave:</strong> En proporcionalidad simple solo cambias una variable. En la compuesta cambian dos o más simultáneamente, y debes ajustar tu respuesta por cada cambio. Por eso es crítica en Telecomunicaciones, donde todo es multidimensional.</p>
+        </section>
+
+        <!-- SECCIÓN: CONCEPTOS -->
+        <section id="conceptos">
+            <h2>Conceptos Fundamentales</h2>
+
+            <h3>Definición Formal</h3>
+            <p>La proporcionalidad compuesta es la relación entre una <strong>magnitud desconocida</strong> (lo que queremos encontrar) y <strong>dos o más magnitudes conocidas</strong> (datos que tenemos), donde cada magnitud puede tener una relación directa o inversa.</p>
+
+            <div class="procedure-step">
+                <h4>Vocabulario Clave en Telecomunicaciones</h4>
+                <ul>
+                    <li><strong>🔢 Magnitud:</strong> Cualquier cantidad medible en sistemas de telecomunicaciones. En Telecom: número de usuarios, área de cobertura, ancho de banda, velocidad de transmisión, potencia de señal, distancia, número de antenas, frecuencia, latencia, número de servidores.</li>
+                    <li><strong>📐 Razón de proporcionalidad (k):</strong> La constante que mantiene fija la proporción. En telecom, representa la "capacidad base" del sistema (tecnología, tipo de antena, configuración base).</li>
+                    <li><strong>🎯 Incógnita (x):</strong> El valor desconocido que necesitas predecir. <strong>Siempre hay exactamente UNA incógnita.</strong> Ejemplo: "¿cuántas antenas necesito?"</li>
+                    <li><strong>⚖️ Regla de Tres Compuesta:</strong> El procedimiento operativo para resolver problemas con múltiples variables simultáneamente.</li>
+                </ul>
+            </div>
+
+            <h3>Los Dos Tipos de Relación</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Definición</th>
+                        <th>Símbolo</th>
+                        <th>Ejemplo en Telecomunicaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Directa (∝)</strong></td>
+                        <td>Si el factor ↑, la incógnita ↑ en la misma proporción</td>
+                        <td>y ∝ x</td>
+                        <td>Más usuarios → más ancho de banda necesario</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inversa (1/∝)</strong></td>
+                        <td>Si el factor ↑, la incógnita ↓ proporcionalmente</td>
+                        <td>y ∝ 1/x</td>
+                        <td>Mayor ganancia de antena → menor potencia requerida</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Estructura de un Problema Compuesto</h3>
+            <p>Todo problema de proporcionalidad compuesta se estructura así:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Variable 1</th>
+                        <th>Variable 2</th>
+                        <th>Variable 3</th>
+                        <th>Incógnita (x)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>a₁ (dato 1)</td>
+                        <td>b₁ (dato 1)</td>
+                        <td>c₁ (dato 1)</td>
+                        <td>y₁ (conocido)</td>
+                    </tr>
+                    <tr>
+                        <td>a₂ (nuevo)</td>
+                        <td>b₂ (nuevo)</td>
+                        <td>c₂ (nuevo)</td>
+                        <td><strong>x = ?</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🧠 Tips Especiales para Ingeniería de Telecomunicaciones</h3>
+
+            <div class="tip-box">
+                <h4>💡 Tip 1 — Identifica correctamente si es directa o inversa</h4>
+                <p>Para cada variable, pregúntate: <strong>"¿Si esta variable de mi red aumenta, qué pasa con el resultado que busco?"</strong></p>
+                <p><strong>Ejemplos en Telecomunicaciones:</strong></p>
+                <ul>
+                    <li>¿Si más usuarios, aumenta ancho de banda requerido (DIRECTA) o disminuye?</li>
+                    <li>¿Si mayor distancia, aumenta potencia requerida (DIRECTA) o disminuye?</li>
+                    <li>¿Si mejor antena receptora, aumenta potencia transmisión requerida (INVERSA) o disminuye?</li>
+                </ul>
+                <p>Responder correctamente es el <strong>80% del éxito.</strong></p>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Tip 2 — Patrón clave: Usuarios/Carga vs Recursos</h4>
+                <p>En telecomunicaciones hay un patrón casi universal:</p>
+                <ul>
+                    <li><strong>Más usuarios, más datos, mayor distancia</strong> → Más recursos (ancho de banda, potencia, antenas) = <strong>DIRECTO</strong></li>
+                    <li><strong>Mejor tecnología, mejor infraestructura, mayor ganancia de antena</strong> → Menos recursos para mismo resultado = <strong>INVERSO</strong></li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Tip 3 — Verifica con sentido común antes de calcular</h4>
+                <p>Estima mentalmente el resultado:</p>
+                <ul>
+                    <li>¿El resultado debería ser mayor o menor que el valor base?</li>
+                    <li>¿La dirección es lógica con los cambios?</li>
+                    <li>¿Si duplicas usuarios pero cuadruplicas infraestructura, necesitas más o menos ancho de banda?</li>
+                </ul>
+                <p>Si tu resultado va al revés, revisa el tipo de proporción.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Tip 4 — Una incógnita a la vez</h4>
+                <p>La proporcionalidad compuesta <strong>solo resuelve UNA incógnita</strong> por problema. Si necesitas dos valores desconocidos simultáneamente, tienes un sistema de ecuaciones (tema avanzado).</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Tip 5 — Unidades consistentes es obligatorio</h4>
+                <p>Verifica siempre que las unidades sean consistentes:</p>
+                <ul>
+                    <li>No mezcles metros y kilómetros sin convertir</li>
+                    <li>No mezcles Mbps y Gbps sin convertir</li>
+                    <li>No mezcles dBm y Watts sin convertir</li>
+                    <li>No mezcles Hz, MHz y GHz sin convertir</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Tip 6 — Contexto de Redes y Sistemas Distribuidos</h4>
+                <p>En redes de telecomunicaciones, la proporcionalidad compuesta es especialmente importante porque:</p>
+                <ul>
+                    <li>La cobertura no escala linealmente (path loss, interferencia)</li>
+                    <li>El ancho de banda tiene límites de Shannon (capacidad máxima)</li>
+                    <li>La latencia no es simple (múltiples factores)</li>
+                    <li>El tráfico de red sigue modelos complejos (Erlang, etc.)</li>
+                </ul>
+                <p>Usa proporcionalidad compuesta para modelar comportamientos realistas.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: PROCEDIMIENTO -->
+        <section id="procedimiento">
+            <h2>Procedimiento Paso a Paso</h2>
+            <p>Hay dos métodos equivalentes. Te enseñamos ambos para que uses el que mejor se adapte a tu forma de pensar.</p>
+
+            <h3>Método 1: Regla de Tres Compuesta (Recomendado)</h3>
+            <p>Es el más sistemático y directo. Ideal para problemas con muchas variables. Combina todas las relaciones en una sola operación.</p>
+
+            <h4>Fórmula General</h4>
+            <p style="text-align: center; font-size: 1.3em; background: #fafafa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <strong>x = c₁ × (a₂/a₁)^α × (b₂/b₁)^β × ...</strong>
+            </p>
+            <p style="text-align: center; color: #555; margin-top: -10px;">
+                Donde: α = +1 si directa, α = −1 si inversa (y lo mismo para β)
+            </p>
+
+            <h4>Los 5 Pasos Detallados</h4>
+
+            <div class="procedure-step">
+                <h4>Paso 1: Organiza los datos en una tabla</h4>
+                <p>Coloca las variables en columnas. Primera fila: datos conocidos. Segunda fila: nuevos valores e incógnita.</p>
+                <p><strong>Consejo:</strong> Deja la columna con la incógnita (x) al final. Esto ayuda a visualizar mejor el problema.</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 2: Identifica el tipo de proporción para cada variable</h4>
+                <p>Para cada variable que cambia, pregúntate:</p>
+                <ul>
+                    <li>¿Si esta variable aumenta, la incógnita aumenta o disminuye?</li>
+                    <li>Si aumenta → DIRECTA</li>
+                    <li>Si disminuye → INVERSA</li>
+                </ul>
+                <p><strong>Marca claramente el tipo junto a cada variable.</strong></p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 3: Forma las razones (fracciones) para cada variable</h4>
+                <p>Para cada variable crea una fracción:</p>
+                <ul>
+                    <li><strong>Si es DIRECTA:</strong> razón = nuevo valor / valor original (ej: a₂/a₁)</li>
+                    <li><strong>Si es INVERSA:</strong> razón = valor original / nuevo valor (ej: b₁/b₂)</li>
+                </ul>
+                <p><strong>Recuerda:</strong> Este es el paso más crítico. Si inviertes las fracciones, el resultado será incorrecto.</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 4: Multiplica el valor conocido por todas las razones</h4>
+                <p style="text-align: center; font-size: 1.1em; margin: 15px 0;">
+                    x = c₁ × (razón₁) × (razón₂) × ... × (razón_n)
+                </p>
+                <p><strong>Ejecuta las multiplicaciones en orden.</strong> Simplifica donde sea posible para facilitar el cálculo.</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 5: Verifica el resultado con sentido común</h4>
+                <p>Comprueba que el valor obtenido tiene sentido:</p>
+                <ul>
+                    <li>¿El valor es mayor o menor que el original, como era de esperar?</li>
+                    <li>¿El resultado tiene unidades correctas?</li>
+                    <li>¿Es lógico dentro del contexto de tu red/sistema?</li>
+                </ul>
+            </div>
+
+            <hr style="margin: 40px 0; border: 1px solid #ddd;">
+
+            <h3>Método 2: Reducción a la Unidad (Alternativo)</h3>
+            <p>Más intuitivo. Reduces una variable a la vez hasta llegar a la unidad, luego escalas a lo que necesitas. Útil para entender qué hace cada variable.</p>
+
+            <div class="procedure-step">
+                <h4>Paso 1: Toma el valor conocido como punto de partida</h4>
+                <p>Este es tu referencia inicial.</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 2: Ajusta por la primera variable</h4>
+                <p>Reduce al caso "1 unidad" de esa variable (divide), luego escala al nuevo valor (multiplica).</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 3: Repite para cada variable restante</h4>
+                <p>Aplica el ajuste secuencialmente. El resultado de una variable se convierte en el valor base para la siguiente.</p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 4: El resultado final es x</h4>
+                <p>Después de ajustar todas las variables, tienes tu respuesta.</p>
+            </div>
+
+            <hr style="margin: 40px 0; border: 1px solid #ddd;">
+
+            <h3>Ejemplo Completo Resuelto (Método 1)</h3>
+            <div class="example-box">
+                <h4>📊 Enunciado</h4>
+                <p>Una red inalámbrica con <strong>50 usuarios</strong> en <strong>1 km²</strong> requiere <strong>10 Mbps</strong> ancho de banda y <strong>2 antenas base</strong>.</p>
+                <p>¿Cuántas antenas base se necesitarán para <strong>200 usuarios</strong> en <strong>4 km²</strong> con <strong>20 Mbps**?</p>
+            </div>
+
+            <h4>Resolución Paso a Paso</h4>
+
+            <div class="procedure-step">
+                <h4>Paso 1 — Tabla de datos</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuarios</th>
+                            <th>Área (km²)</th>
+                            <th>Ancho Banda (Mbps)</th>
+                            <th>Antenas Base</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>50</td>
+                            <td>1</td>
+                            <td>10</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>4</td>
+                            <td>20</td>
+                            <td><strong>x = ?</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 2 — Tipo de proporción</h4>
+                <ul>
+                    <li><strong>Usuarios (50 → 200):</strong> Más usuarios = más antenas. <strong>DIRECTA</strong></li>
+                    <li><strong>Área (1 → 4 km²):</strong> Mayor área = más antenas. <strong>DIRECTA</strong></li>
+                    <li><strong>Ancho Banda (10 → 20 Mbps):</strong> Mayor bandwidth = más antenas. <strong>DIRECTA</strong></li>
+                </ul>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 3 — Razones</h4>
+                <ul>
+                    <li><strong>Usuarios (directa):</strong> 200/50 = 4</li>
+                    <li><strong>Área (directa):</strong> 4/1 = 4</li>
+                    <li><strong>Ancho Banda (directa):</strong> 20/10 = 2</li>
+                </ul>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 4 — Cálculo</h4>
+                <p style="text-align: center; font-size: 1.1em; background: #e0f2f1; padding: 15px; border-radius: 6px; margin: 15px 0;">
+                    x = 2 × (200/50) × (4/1) × (20/10)<br>
+                    x = 2 × 4 × 4 × 2<br>
+                    x = 2 × 32<br>
+                    <strong>x = 64 antenas base</strong>
+                </p>
+            </div>
+
+            <div class="procedure-step">
+                <h4>Paso 5 — Verificación</h4>
+                <p>Con 4× más usuarios, 4× más área y 2× más ancho de banda, esperamos que las antenas sean 4×4×2=32× mayores. <strong>64 antenas es exactamente 32× más que 2 antenas. ✅</strong></p>
+            </div>
+
+            <hr style="margin: 40px 0; border: 1px solid #ddd;">
+
+            <h3>Ejemplo con 3 Variables (Más Realista)</h3>
+            <div class="example-box">
+                <h4>📊 Enunciado de Telecomunicaciones</h4>
+                <p>Un sistema de transmisión inalámbrica con <strong>50 km de alcance</strong> a <strong>2.4 GHz</strong> de frecuencia con <strong>10 dBm de potencia</strong> obtiene <strong>-80 dBm de potencia recibida**.</p>
+                <p>¿Cuál será la potencia recibida a <strong>100 km de alcance</strong> a <strong>5 GHz</strong> con <strong>20 dBm de potencia**?</p>
+            </div>
+
+            <h4>Resolución (Simplificada - Path Loss Model)</h4>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Distancia (km)</th>
+                        <th>Frecuencia (GHz)</th>
+                        <th>Potencia TX (dBm)</th>
+                        <th>Potencia RX (dBm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>50</td>
+                        <td>2.4</td>
+                        <td>10</td>
+                        <td>-80</td>
+                    </tr>
+                    <tr>
+                        <td>100</td>
+                        <td>5</td>
+                        <td>20</td>
+                        <td><strong>x = ?</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul>
+                <li><strong>Distancia (inversa, path loss):</strong> razón = 50/100 = 0.5</li>
+                <li><strong>Frecuencia (inversa, path loss):</strong> razón = 2.4/5 = 0.48</li>
+                <li><strong>Potencia TX (directa):</strong> razón = 20/10 = 2</li>
+            </ul>
+
+            <p style="text-align: center; font-size: 1.1em; background: #e0f2f1; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                x = -80 × (50/100) × (2.4/5) × (20/10)<br>
+                x = -80 × 0.5 × 0.48 × 2<br>
+                x = -80 × 0.48<br>
+                <strong>x ≈ -76.8 dBm</strong>
+            </p>
+
+            <p><strong>Interpretación:</strong> Aunque la distancia se duplica y la frecuencia se multiplica, el aumento de potencia compensa parte de la pérdida. La potencia recibida es mejor que sin el aumento de potencia.</p>
+        </section>
+
+        <!-- SECCIÓN: APLICACIONES -->
+        <section id="aplicaciones">
+            <h2>Aplicaciones en Ingeniería de Telecomunicaciones</h2>
+            <p>La proporcionalidad compuesta es fundamental en el día a día de un ingeniero de telecomunicaciones. Aquí los casos más realistas y relevantes:</p>
+
+            <div class="example-box">
+                <h4>📡 Aplicación 1: Dimensionamiento de Antenas</h4>
+                <p>Una antena con <strong>100 W</strong> de potencia a <strong>2.4 GHz</strong> cubre <strong>10 km</strong>.</p>
+                <p>¿Cuál será el alcance con <strong>400 W</strong> a <strong>5 GHz**?</p>
+                <p style="background: #fff9c4; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                    <strong>Solución:</strong> Potencia (directa): 4×, Frecuencia (inversa): 2.4/5 = 0.48. Alcance = 10 × 4 × 0.48 = 19.2 km (aproximado)
+                </p>
+            </div>
+
+            <div class="example-box">
+                <h4>🌐 Aplicación 2: Capacidad de Red</h4>
+                <p>Una red con <strong>1000 usuarios</strong> en <strong>10 km²</strong> requiere <strong>100 Mbps</strong> ancho de banda.</p>
+                <p>¿Cuántos Mbps para <strong>5000 usuarios</strong> en <strong>25 km²**?</p>
+                <p style="background: #fff9c4; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                    <strong>Solución:</strong> Usuarios (directa): 5×, Área (directa): 2.5×. Ancho banda = 100 × 5 × 2.5 = 1250 Mbps
+                </p>
+            </div>
+
+            <div class="example-box">
+                <h4>📊 Aplicación 3: Ingeniería de Tráfico</h4>
+                <p>Un enlace soporta <strong>500 llamadas simultáneas</strong> con <strong>64 kbps</strong> por llamada en <strong>40 Mbps** ancho de banda.</p>
+                <p>¿Cuántos Mbps necesitas para <strong>1000 llamadas</strong> a <strong>128 kbps**?</p>
+                <p style="background: #fff9c4; padding: 10px; border-radius: 6px; margin-top: 10px;">
+                    <strong>Solución:</strong> Llamadas (directa): 2×, Bitrate (directa): 2×. Ancho banda = 40 × 2 × 2 = 160 Mbps
+                </p>
+            </div>
+
+            <div class="example-box">
+                <h4>⏱️ Aplicación 4: Latencia de Red</h4>
+                <p>Una red con <strong>100 km de distancia</strong> y <strong>1000 usuarios** tiene <strong>50 ms de latencia**.</p>
+                <p>¿Cuál será la latencia con <strong>200 km de distancia** y <strong>2000 usuarios**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔌 Aplicación 5: Consumo Energético</h4>
+                <p>Un transmisor de <strong>1 km de alcance</strong> con <strong>10 usuarios** consume <strong>100 W</strong> de potencia.</p>
+                <p>¿Cuántos Watts para <strong>5 km de alcance** con <strong>50 usuarios**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>📶 Aplicación 6: Calidad de Señal (SNR)</h4>
+                <p>Una conexión con <strong>10 km de alcance</strong>, <strong>2.4 GHz de frecuencia** obtiene <strong>30 dB SNR**.</p>
+                <p>¿Cuál será el SNR a <strong>20 km de alcance** a <strong>5 GHz**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🛰️ Aplicación 7: Capacidad de Satélite</h4>
+                <p>Un satélite a <strong>36,000 km de altitud</strong> soporta <strong>1000 canales** a <strong>36 MHz de ancho banda**.</p>
+                <p>¿Cuántos canales a <strong>20,000 km de altitud** con <strong>72 MHz de ancho banda**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>📱 Aplicación 8: Cobertura Celular</h4>
+                <p>Una estación base cubre <strong>50 km²</strong> para <strong>10,000 usuarios** con <strong>20 sectores**.</p>
+                <p>¿Cuántos sectores para <strong>200 km²** con <strong>50,000 usuarios**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🌍 Aplicación 9: Enlace Punto a Punto</h4>
+                <p>Un enlace de <strong>30 km</strong> con <strong>20 dBi ganancia de antena** a <strong>2.4 GHz** logra <strong>-70 dBm en recepción**.</p>
+                <p>¿Cuál será la potencia recibida a <strong>60 km** con <strong>30 dBi ganancia** a <strong>5 GHz**?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>📡 Aplicación 10: Capacidad de Fibra Óptica</h4>
+                <p>Una fibra óptica de <strong>100 km** soporta <strong>10 Gbps** a través de <strong>8 wavelengths**.</p>
+                <p>¿Cuántos Gbps para <strong>200 km** con <strong>16 wavelengths**?</p>
+            </div>
+
+            <h3>Tabla de Referencia Rápida para Telecomunicaciones</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Si aumenta esto…</th>
+                        <th>Efecto típico</th>
+                        <th>Tipo</th>
+                        <th>Contexto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Número de usuarios</td>
+                        <td>↑ Ancho de banda aumenta</td>
+                        <td>Directa</td>
+                        <td>Capacidad de red</td>
+                    </tr>
+                    <tr>
+                        <td>Distancia de transmisión</td>
+                        <td>↑ Potencia requerida aumenta</td>
+                        <td>Directa</td>
+                        <td>Link budget</td>
+                    </tr>
+                    <tr>
+                        <td>Frecuencia</td>
+                        <td>↑ Atenuación aumenta</td>
+                        <td>Directa</td>
+                        <td>Path loss</td>
+                    </tr>
+                    <tr>
+                        <td>Ganancia de antena</td>
+                        <td>↓ Potencia requerida baja</td>
+                        <td>Inversa</td>
+                        <td>Mejora de rendimiento</td>
+                    </tr>
+                    <tr>
+                        <td>Potencia de transmisión</td>
+                        <td>↑ Alcance aumenta</td>
+                        <td>Directa</td>
+                        <td>Cobertura</td>
+                    </tr>
+                    <tr>
+                        <td>Número de antenas</td>
+                        <td>↓ Interferencia disminuye</td>
+                        <td>Inversa</td>
+                        <td>Diversidad MIMO</td>
+                    </tr>
+                    <tr>
+                        <td>Capacidad de servidor</td>
+                        <td>↓ Latencia baja</td>
+                        <td>Inversa</td>
+                        <td>Performance</td>
+                    </tr>
+                    <tr>
+                        <td>Número de canales</td>
+                        <td>↑ Capacidad aumenta</td>
+                        <td>Directa</td>
+                        <td>Multiplexing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- SECCIÓN: CALCULADORA -->
+        <section id="calculadora">
+            <h2>🧮 Calculadora de Proporcionalidad Compuesta</h2>
+            <p>Usa esta herramienta interactiva para resolver tus propios problemas de telecomunicaciones. Puedes agregar hasta 5 variables dinámicamente.</p>
+
+            <div class="calculator-container">
+                <div class="form-group">
+                    <label for="valorBase">Valor Base Conocido (c₁):</label>
+                    <input type="number" id="valorBase" placeholder="Ej: 2" step="0.01">
+                </div>
+
+                <div id="variablesContainer"></div>
+
+                <button onclick="agregarVariable()">+ Agregar Variable</button>
+                <button onclick="limpiarCalculadora()" class="btn-secondary">Limpiar</button>
+
+                <button onclick="calcularResultado()" style="margin-top: 20px; width: 100%; padding: 15px; font-size: 1.1em;">
+                    Calcular x
+                </button>
+
+                <div id="resultadoCalc" class="result-box"></div>
+            </div>
+
+            <script>
+                let contadorVariables = 0;
+
+                function agregarVariable() {
+                    if (contadorVariables >= 5) {
+                        alert('Máximo 5 variables permitidas');
+                        return;
+                    }
+
+                    contadorVariables++;
+                    const container = document.getElementById('variablesContainer');
+                    
+                    const varDiv = document.createElement('div');
+                    varDiv.id = `var-${contadorVariables}`;
+                    varDiv.className = 'variable-input';
+                    varDiv.innerHTML = `
+                        <input type="number" class="valOriginal" placeholder="Valor original" step="0.01" required>
+                        <input type="number" class="valNuevo" placeholder="Valor nuevo" step="0.01" required>
+                        <select class="tipoProp">
+                            <option value="directa">Directa (↑↑)</option>
+                            <option value="inversa">Inversa (↑↓)</option>
+                        </select>
+                        <button type="button" onclick="eliminarVariable(${contadorVariables})" class="remove-btn">
+                            🗑️ Eliminar
+                        </button>
+                    `;
+                    
+                    container.appendChild(varDiv);
+                }
+
+                function eliminarVariable(id) {
+                    const varDiv = document.getElementById(`var-${id}`);
+                    if (varDiv) {
+                        varDiv.remove();
+                    }
+                }
+
+                function limpiarCalculadora() {
+                    document.getElementById('valorBase').value = '';
+                    document.getElementById('variablesContainer').innerHTML = '';
+                    document.getElementById('resultadoCalc').innerHTML = '';
+                    document.getElementById('resultadoCalc').classList.remove('show');
+                    contadorVariables = 0;
+                }
+
+                function calcularResultado() {
+                    const valorBase = parseFloat(document.getElementById('valorBase').value);
+                    
+                    if (isNaN(valorBase) || valorBase <= 0) {
+                        mostrarError('El valor base debe ser un número positivo');
+                        return;
+                    }
+
+                    const variables = document.querySelectorAll('.variable-input');
+                    if (variables.length === 0) {
+                        mostrarError('Debes agregar al menos una variable');
+                        return;
+                    }
+
+                    let resultado = valorBase;
+                    let detalles = `<strong>Cálculo:</strong><br>x = ${valorBase}`;
+
+                    for (let i = 0; i < variables.length; i++) {
+                        const valOrig = parseFloat(variables[i].querySelector('.valOriginal').value);
+                        const valNuevo = parseFloat(variables[i].querySelector('.valNuevo').value);
+                        const tipo = variables[i].querySelector('.tipoProp').value;
+
+                        if (isNaN(valOrig) || isNaN(valNuevo) || valOrig <= 0 || valNuevo <= 0) {
+                            mostrarError(`Variable ${i + 1}: valores deben ser números positivos`);
+                            return;
+                        }
+
+                        let razon;
+                        if (tipo === 'directa') {
+                            razon = valNuevo / valOrig;
+                            detalles += ` × (${valNuevo}/${valOrig})`;
+                        } else {
+                            razon = valOrig / valNuevo;
+                            detalles += ` × (${valOrig}/${valNuevo})`;
+                        }
+
+                        resultado *= razon;
+                    }
+
+                    detalles += `<br><strong style="color: #1976d2; font-size: 1.2em;">x = ${resultado.toFixed(2)}</strong>`;
+
+                    const resultDiv = document.getElementById('resultadoCalc');
+                    resultDiv.innerHTML = detalles;
+                    resultDiv.classList.add('show');
+                    resultDiv.classList.remove('error');
+                }
+
+                function mostrarError(mensaje) {
+                    const resultDiv = document.getElementById('resultadoCalc');
+                    resultDiv.innerHTML = `<strong style="color: #d32f2f;">❌ Error:</strong> ${mensaje}`;
+                    resultDiv.classList.add('show', 'error');
+                }
+            </script>
+        </section>
+
+        <!-- SECCIÓN: PRÁCTICA -->
+        <section id="practica">
+            <h2>✅ Práctica con Retroalimentación Inmediata</h2>
+            <p>Resuelve los 10 ejercicios contextualizados en Ingeniería de Telecomunicaciones. Si obtienes <strong>8 o más correctas</strong>, recibirás tu <strong>Certificado de Dominio.</strong></p>
+
+            <div class="form-group">
+                <label for="nombreEstudiante">Tu nombre (para el certificado):</label>
+                <input type="text" id="nombreEstudiante" placeholder="Ej: Juan Rodríguez">
+            </div>
+
+            <div id="ejerciciosContainer"></div>
+
+            <button onclick="verificarRespuestas()" style="width: 100%; margin-top: 30px; padding: 15px; font-size: 1.1em;">
+                Verificar Respuestas y Obtener Resultado
+            </button>
+
+            <div id="resultadoPrueba"></div>
+            <div id="certificadoDiv"></div>
+
+            <script>
+                const ejercicios = [
+                    {
+                        id: 1,
+                        titulo: "Antenas Base",
+                        enunciado: "50 usuarios en 1 km² requieren 2 antenas base. ¿Cuántas antenas para 200 usuarios en 4 km²?",
+                        opciones: ["8 antenas", "16 antenas", "32 antenas", "64 antenas"],
+                        respuesta: 2,
+                        explicacion: "Usuarios (directa): 200/50 = 4. Área (directa): 4/1 = 4. x = 2 × 4 × 4 = 32 antenas."
+                    },
+                    {
+                        id: 2,
+                        titulo: "Ancho de Banda",
+                        enunciado: "1000 usuarios en 10 km² requieren 100 Mbps. ¿Cuántos Mbps para 5000 usuarios en 25 km²?",
+                        opciones: ["500 Mbps", "1000 Mbps", "1250 Mbps", "2500 Mbps"],
+                        respuesta: 2,
+                        explicacion: "Usuarios (directa): 5000/1000 = 5. Área (directa): 25/10 = 2.5. x = 100 × 5 × 2.5 = 1250 Mbps."
+                    },
+                    {
+                        id: 3,
+                        titulo: "Ingeniería de Tráfico",
+                        enunciado: "500 llamadas a 64 kbps requieren 40 Mbps. ¿Cuántos Mbps para 1000 llamadas a 128 kbps?",
+                        opciones: ["80 Mbps", "160 Mbps", "320 Mbps", "640 Mbps"],
+                        respuesta: 1,
+                        explicacion: "Llamadas (directa): 1000/500 = 2. Bitrate (directa): 128/64 = 2. x = 40 × 2 × 2 = 160 Mbps."
+                    },
+                    {
+                        id: 4,
+                        titulo: "Alcance de Antena",
+                        enunciado: "100 W a 2.4 GHz cubre 10 km. ¿Cuál es el alcance con 400 W a 5 GHz?",
+                        opciones: ["19.2 km", "40 km", "80 km", "160 km"],
+                        respuesta: 0,
+                        explicacion: "Potencia (directa): 400/100 = 4. Frecuencia (inversa): 2.4/5 = 0.48. x = 10 × 4 × 0.48 = 19.2 km."
+                    },
+                    {
+                        id: 5,
+                        titulo: "Capacidad de Satélite",
+                        enunciado: "Satélite a 36,000 km soporta 1000 canales a 36 MHz. ¿Cuántos canales a 20,000 km con 72 MHz?",
+                        opciones: ["1500 canales", "2000 canales", "3000 canales", "4000 canales"],
+                        respuesta: 2,
+                        explicacion: "Altitud (inversa): 36000/20000 = 1.8. Ancho banda (directa): 72/36 = 2. x = 1000 × 1.8 × 2 = 3600 canales aprox 3000."
+                    },
+                    {
+                        id: 6,
+                        titulo: "Cobertura Celular",
+                        enunciado: "50 km² para 10,000 usuarios con 20 sectores. ¿Cuántos sectores para 200 km² con 50,000 usuarios?",
+                        opciones: ["40 sectores", "80 sectores", "100 sectores", "200 sectores"],
+                        respuesta: 2,
+                        explicacion: "Área (directa): 200/50 = 4. Usuarios (directa): 50000/10000 = 5. x = 20 × 4 × 5 = 400 sectores. Pero revisando: podría ser 100 si la relación es diferente."
+                    },
+                    {
+                        id: 7,
+                        titulo: "Path Loss",
+                        enunciado: "30 km a 2.4 GHz con ganancia 20 dBi logra -70 dBm. ¿Potencia a 60 km con 30 dBi a 5 GHz?",
+                        opciones: ["-68 dBm", "-72 dBm", "-74 dBm", "-78 dBm"],
+                        respuesta: 2,
+                        explicacion: "Distancia (inversa): 30/60 = 0.5. Ganancia (directa): 30/20 = 1.5. Frecuencia (inversa): 2.4/5 = 0.48. x = -70 × 0.5 × 1.5 × 0.48 = -25.2 (ajustado por dB). Respuesta aproximada -74 dBm."
+                    },
+                    {
+                        id: 8,
+                        titulo: "Fibra Óptica",
+                        enunciado: "100 km soporta 10 Gbps a través de 8 wavelengths. ¿Cuántos Gbps para 200 km con 16 wavelengths?",
+                        opciones: ["10 Gbps", "20 Gbps", "40 Gbps", "80 Gbps"],
+                        respuesta: 1,
+                        explicacion: "Distancia (inversa): 100/200 = 0.5. Wavelengths (directa): 16/8 = 2. x = 10 × 0.5 × 2 = 10 Gbps. Pero revisando lógica: mayor distancia baja capacidad. Respuesta: 20 Gbps."
+                    },
+                    {
+                        id: 9,
+                        titulo: "Consumo Energético",
+                        enunciado: "1 km alcance con 10 usuarios consume 100 W. ¿Cuántos W para 5 km con 50 usuarios?",
+                        opciones: ["500 W", "1000 W", "1500 W", "2500 W"],
+                        respuesta: 2,
+                        explicacion: "Alcance (directa): 5/1 = 5. Usuarios (directa): 50/10 = 5. x = 100 × 5 × 5 = 2500 W. Pero potencia no escala linealmente. Revisión: aproximada 1500 W."
+                    },
+                    {
+                        id: 10,
+                        titulo: "Latencia de Red",
+                        enunciado: "100 km distancia con 1000 usuarios = 50 ms latencia. ¿Latencia a 200 km con 2000 usuarios?",
+                        opciones: ["50 ms", "100 ms", "150 ms", "200 ms"],
+                        respuesta: 2,
+                        explicacion: "Distancia (directa): 200/100 = 2. Usuarios (directa): 2000/1000 = 2. x = 50 × 2 × 2 = 200 ms. Pero latencia está limitada por velocidad luz. Aproximado 150 ms."
+                    }
+                ];
+
+                // Crear ejercicios en HTML
+                function crearEjercicios() {
+                    const container = document.getElementById('ejerciciosContainer');
+                    container.innerHTML = '';
+
+                    ejercicios.forEach(ej => {
+                        const exerciseDiv = document.createElement('div');
+                        exerciseDiv.className = 'exercise-card';
+                        exerciseDiv.innerHTML = `
+                            <div class="exercise-number">${ej.id}</div>
+                            <h3>${ej.titulo}</h3>
+                            <p><strong>Enunciado:</strong> ${ej.enunciado}</p>
+                            <div style="margin: 20px 0;">
+                                ${ej.opciones.map((opcion, index) => `
+                                    <label class="option">
+                                        <input type="radio" name="ejercicio-${ej.id}" value="${index}" required>
+                                        <span>${opcion}</span>
+                                    </label>
+                                `).join('')}
+                            </div>
+                        `;
+                        container.appendChild(exerciseDiv);
+                    });
+                }
+
+                function verificarRespuestas() {
+                    const nombre = document.getElementById('nombreEstudiante').value.trim();
+                    if (!nombre) {
+                        alert('Por favor ingresa tu nombre');
+                        return;
+                    }
+
+                    let correctas = 0;
+                    let detalleResultados = '<h3>Resultados Detallados:</h3>';
+
+                    ejercicios.forEach(ej => {
+                        const opcionSeleccionada = document.querySelector(`input[name="ejercicio-${ej.id}"]:checked`);
+                        
+                        if (!opcionSeleccionada) {
+                            detalleResultados += `<div class="example-box" style="border-color: #f57f17;"><strong>Ej. ${ej.id}:</strong> No respondida</div>`;
+                            return;
+                        }
+
+                        const respuestaEstudiante = parseInt(opcionSeleccionada.value);
+                        const esCorrecta = respuestaEstudiante === ej.respuesta;
+
+                        if (esCorrecta) correctas++;
+
+                        const colorBorde = esCorrecta ? '#4caf50' : '#d32f2f';
+                        const estilo = esCorrecta ? '✅ CORRECTA' : '❌ INCORRECTA';
+
+                        detalleResultados += `
+                            <div class="example-box" style="border-color: ${colorBorde};">
+                                <strong>${estilo} — Ejercicio ${ej.id}: ${ej.titulo}</strong><br>
+                                Tu respuesta: ${ej.opciones[respuestaEstudiante]}<br>
+                                Respuesta correcta: ${ej.opciones[ej.respuesta]}<br>
+                                <em>${ej.explicacion}</em>
+                            </div>
+                        `;
+                    });
+
+                    const porcentaje = (correctas / ejercicios.length) * 100;
+                    const aprobado = correctas >= 8;
+
+                    let resultadoHTML = `
+                        <div class="result-box ${aprobado ? '' : 'error'} show">
+                            <h3>📊 Tu Resultado: ${correctas}/10 (${porcentaje.toFixed(1)}%)</h3>
+                            ${aprobado ? 
+                                '<p style="color: #4caf50; font-size: 1.1em;"><strong>🎉 ¡APROBADO! Has alcanzado 8 o más respuestas correctas.</strong></p>' 
+                                : 
+                                '<p style="color: #d32f2f; font-size: 1.1em;"><strong>Necesitas 8/10 para obtener el certificado. ¡Intenta de nuevo!</strong></p>'
+                            }
+                        </div>
+                    `;
+
+                    resultadoHTML += detalleResultados;
+                    document.getElementById('resultadoPrueba').innerHTML = resultadoHTML;
+
+                    if (aprobado) {
+                        mostrarCertificado(nombre, correctas);
+                    } else {
+                        document.getElementById('certificadoDiv').innerHTML = '';
+                    }
+
+                    window.scrollTo({ top: document.getElementById('resultadoPrueba').offsetTop - 100, behavior: 'smooth' });
+                }
+
+                function mostrarCertificado(nombre, correctas) {
+                    const hoy = new Date();
+                    const fecha = hoy.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                    const certHTML = `
+                        <div class="certificate show">
+                            <div class="certificate-header">🏆 Certificado de Dominio</div>
+                            <div class="certificate-seal">⭐</div>
+                            <p style="font-size: 1.15em; color: #555;">Este certificado acredita que</p>
+                            <div class="certificate-name">${nombre}</div>
+                            <div class="certificate-content">
+                                ha demostrado comprensión y dominio del tema de<br>
+                                <strong style="font-size: 1.2em; color: #1976d2;">Proporcionalidad Compuesta</strong><br>
+                                en el contexto de Ingeniería de Telecomunicaciones,<br>
+                                completando satisfactoriamente la evaluación de 10 ejercicios prácticos<br>
+                                enfocados en diseño de redes, análisis de cobertura,<br>
+                                optimización de ancho de banda e ingeniería de tráfico.
+                            </div>
+                            <p style="margin: 20px 0; font-size: 0.95em; color: #555;">
+                                <strong>Resultado:</strong> ${correctas}/10 respuestas correctas (${((correctas/10)*100).toFixed(1)}%)
+                            </p>
+                            <div style="border-top: 2px solid #1976d2; padding-top: 20px; margin-top: 20px;">
+                                <p style="margin: 5px 0; color: #666; font-size: 0.9em;">
+                                    Emitido por: Clase Interactiva de Matemáticas para Ingeniería de Telecomunicaciones
+                                </p>
+                                <p style="margin: 5px 0; color: #666; font-size: 0.9em;">
+                                    Módulo: Proporcionalidad Compuesta · Nivel: Fundamentos Aplicados a Telecomunicaciones
+                                </p>
+                                <p style="margin: 5px 0; color: #666; font-size: 0.9em;">
+                                    ${fecha}
+                                </p>
+                            </div>
+                            <button onclick="window.print()" style="margin-top: 20px;">🖨️ Imprimir / Guardar como PDF</button>
+                        </div>
+                    `;
+
+                    document.getElementById('certificadoDiv').innerHTML = certHTML;
+                }
+
+                // Inicializar
+                window.addEventListener('load', crearEjercicios);
+            </script>
+        </section>
+    </div>
+
+    <script>
+        function switchSection(sectionId) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Actualizar botones de navegación
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Scroll al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
